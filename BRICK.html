@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>BRICK</title>
+</head>
+<body>
+<canvas id="gameCanvas" width="800" height="600"></canvas>
+
+<script>
+
+    var canvas;
+    var canvasContext;
+
+    var ballX, ballY;
+    var ballSpeedX = 5;
+    var ballSpeedY = 5;
+    
+
+    window.onload = function() {
+        const fps = 30;
+        canvas = document.getElementById('gameCanvas');
+        canvasContext = canvas.getContext('2d');
+
+        ballX = canvas.width / 2;
+        ballY = canvas.height / 2;
+
+        //add event listener here
+
+        setInterval(function() {
+            move();
+            draw();
+        }, 1000 / fps);
+    }
+
+    function move() {
+
+        if (ballX < 0 || ballX > canvas.width)
+            ballSpeedX *= -1;
+
+        if (ballY < 0 || ballY > canvas.height)
+            ballSpeedY *= -1;
+
+
+        ballX += ballSpeedX;
+        ballY += ballSpeedY;
+
+    }
+
+    function draw() {
+        colorRect(0, 0, canvas.width, canvas.height, '#000000');
+
+        colorCircle(ballX, ballY, 10, '#FFFFFF');
+    }
+
+    function colorRect(topLeftX, topRightY, boxWidth, boxHeight, fillColor) {
+        canvasContext.fillStyle = fillColor;
+        canvasContext.fillRect(topLeftX, topRightY, boxWidth, boxHeight);
+    }
+
+    function colorCircle(centerX, centerY, radius, fillColor) {
+        canvasContext.fillStyle = fillColor;
+        canvasContext.beginPath();
+        canvasContext.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
+        canvasContext.fill();
+    }
+
+</script>
+
+</body>
+</html>
