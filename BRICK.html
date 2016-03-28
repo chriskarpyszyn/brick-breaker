@@ -15,6 +15,7 @@
     var ballX, ballY;
     var ballSpeedX = 5;
     var ballSpeedY = 5;
+    var ballSpeedXMultipler = 0.35;
 
     var paddleWidth = 100;
     var paddleHeight = 10;
@@ -26,8 +27,8 @@
         canvas = document.getElementById('gameCanvas');
         canvasContext = canvas.getContext('2d');
 
-        ballX = canvas.width / 2;
-        ballY = canvas.height / 2;
+        resetBall();
+
         paddleX = canvas.width / 2 - paddleWidth / 2;
         paddleY = canvas.height - paddleHeight;
 
@@ -47,9 +48,17 @@
 
         if (ballX < 0 || ballX > canvas.width)
             ballSpeedX *= -1;
-
-        if (ballY < 0 || ballY > canvas.height)
+        else if (ballY < 0)
             ballSpeedY *= -1;
+        else if (ballY > canvas.height) 
+            resetBall();
+        else if (ballY > canvas.height - paddleHeight && (ballX >= paddleX && ballX <= paddleX + paddleWidth)) {
+            const delta = ballX - (paddleX + paddleWidth / 2);
+            ballSpeedX = delta * ballSpeedXMultipler;
+            ballSpeedY *= -1;
+        }
+        
+
 
 
         ballX += ballSpeedX;
@@ -90,6 +99,11 @@
             y: mouseY
     }
 
+    }
+
+    function resetBall() {
+        ballX = canvas.width / 2;
+        ballY = canvas.height / 2;
     }
 
 </script>
