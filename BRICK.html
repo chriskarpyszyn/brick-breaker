@@ -23,6 +23,13 @@
 
     var ballRadius = 10;
 
+    const BRICK_WIDTH = 80;
+    const BRICK_HEIGHT = 20;
+    const BRICK_GAP = 2;
+    const BRICK_COLS = 10;
+    const BRICK_ROWS = 14;
+
+
     
 
     window.onload = function() {
@@ -75,7 +82,19 @@
 
         colorRect(paddleX, paddleY, paddleWidth, paddleHeight, '#FFFFFF');
 
+        drawBricks();
+
         colorCircle(ballX, ballY, ballRadius, '#FFFFFF');
+    }
+
+    function drawBricks() {
+
+        for (var i = 0; i < BRICK_COLS; i++) {
+            for (var j = 0; j < BRICK_ROWS; j++) {
+                colorRect((i * BRICK_WIDTH) , (j * BRICK_HEIGHT), BRICK_WIDTH-BRICK_GAP,
+                    BRICK_HEIGHT-BRICK_GAP, '#A1DAED');
+            }
+        }  
     }
 
     function colorRect(topLeftX, topRightY, boxWidth, boxHeight, fillColor) {
