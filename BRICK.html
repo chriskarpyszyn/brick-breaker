@@ -29,7 +29,7 @@
     const BRICK_COLS = 10;
     const BRICK_ROWS = 14;
 
-
+    var brickGrid = new Array(BRICK_COLS * BRICK_ROWS);
     
 
     window.onload = function() {
@@ -38,6 +38,7 @@
         canvasContext = canvas.getContext('2d');
 
         resetBall();
+        resetBricks();
 
         paddleX = canvas.width / 2 - paddleWidth / 2;
         paddleY = canvas.height*.9 - paddleHeight;
@@ -91,8 +92,11 @@
 
         for (var i = 0; i < BRICK_COLS; i++) {
             for (var j = 0; j < BRICK_ROWS; j++) {
-                colorRect((i * BRICK_WIDTH) , (j * BRICK_HEIGHT), BRICK_WIDTH-BRICK_GAP,
-                    BRICK_HEIGHT-BRICK_GAP, '#A1DAED');
+
+                if (isBrickAtTileCoord(i, j)) {
+                    colorRect((i * BRICK_WIDTH), (j * BRICK_HEIGHT), BRICK_WIDTH - BRICK_GAP,
+                    BRICK_HEIGHT - BRICK_GAP, '#A1DAED');
+                }
             }
         }  
     }
@@ -120,9 +124,7 @@
         return {
             x: mouseX,
             y: mouseY
-    }
-
-
+        }
     }
 
     function resetBall() {
@@ -130,6 +132,21 @@
         ballY = canvas.height / 2;
         ballSpeedX = 5;
         ballSpeedY = 5;
+    }
+
+    function resetBricks() {
+        for (let i = 0; i < brickGrid.length; i++) {
+            if (Math.random() < 0.5) {
+                brickGrid[i] = 1;
+            } else {
+                brickGrid[i] = 0;
+            }
+        }
+    }
+
+    function isBrickAtTileCoord(brickTileCol, brickTileRow) {
+        var brickIndex = brickTileCol + BRICK_COLS * brickTileRow;
+        return (brickGrid[brickIndex] === 1);
     }
 
 </script>
