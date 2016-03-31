@@ -13,8 +13,8 @@
     var canvasContext;
 
     var ballX, ballY;
-    var ballSpeedX = 5;
-    var ballSpeedY = 5;
+    var ballSpeedX = 0;
+    var ballSpeedY = 0;
     var ballSpeedXMultipler = 0.35;
 
     var paddleWidth = 100;
@@ -30,12 +30,18 @@
     const BRICK_ROWS = 14;
 
     var brickGrid = new Array(BRICK_COLS * BRICK_ROWS);
-    
+
+    var debug = false;
 
     window.onload = function() {
         const fps = 30;
         canvas = document.getElementById('gameCanvas');
         canvasContext = canvas.getContext('2d');
+
+        //hack for keydown events. probably a better way to do this.
+        //http://stackoverflow.com/questions/15631991/how-to-register-onkeydown-event-for-html5-canvas
+        canvas.tabIndex = 1000;
+        canvas.style.outline = "none";
 
         resetBall();
         resetBricks();
@@ -46,6 +52,18 @@
         canvas.addEventListener('mousemove', function(evt) {
             const mousePos = calculateMousePos(evt);
             paddleX = mousePos.x - (paddleWidth / 2);
+        });
+
+        canvas.addEventListener('keydown', function(evt) {
+            var keyCode = evt.keyCode;
+            //q
+            if (keyCode == 81) {
+                if (debug == true) {
+                    debug = false;
+                } else {
+                    debug = true;
+                }
+            }
         });
         
 
@@ -89,6 +107,8 @@
         drawBricks();
 
         colorCircle(ballX, ballY, ballRadius, '#FFFFFF');
+
+        drawDebug();
 
 
     }
@@ -135,8 +155,8 @@
     function resetBall() {
         ballX = canvas.width / 2;
         ballY = canvas.height / 2;
-        ballSpeedX = 5;
-        ballSpeedY = 5;
+        ballSpeedX = 1;
+        ballSpeedY = 1;
     }
 
     function resetBricks() {
@@ -173,6 +193,24 @@
             return true;
         }
         return false;
+    }
+
+    function drawDebug() {
+        if (debug) {
+
+            var ballSize = 2.5;
+
+            colorCircle(ballX, ballY - ballRadius, ballSize, 'red');
+            colorCircle(ballX, ballY + ballRadius, ballSize, 'green');
+            colorCircle(ballX - ballRadius, ballY, ballSize, 'blue');
+            colorCircle(ballX + ballRadius, ballY, ballSize, 'cyan');
+
+            colorCircle(paddleX, paddleY, ballSize, 'red');
+            colorCircle(paddleX, paddleY + paddleHeight, ballSize, 'pink');
+            colorCircle(paddleX + paddleWidth, paddleY, ballSize, 'blue');
+            colorCircle(paddleX + paddleWidth, paddleY + paddleHeight, ballSize, 'cyan');
+
+        }
     }
 
 
