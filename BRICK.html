@@ -83,6 +83,7 @@
         const ballTop = ballY - ballRadius;
         const ballBottom = ballY + ballRadius;
 
+        ///todo: BUG, ball get's stuck in the side on some collisions
         if (ballLeft < 0) {
             ballSpeedX *= -1;
         }
@@ -124,9 +125,7 @@
         }
         
         ///todo: need to fix ballX, ballY to detect at outer edge of circle and not center (clipping issues)
-        if (CheckAndRemoveBrickAtPixelCoord(ballX, ballY)) {
-            ballSpeedY *= -1;
-        }
+        breakAndBounceOffBrickAtPixelCoord(ballX, ballY);
 
 
         ballX += ballSpeedX;
@@ -215,19 +214,63 @@
     }
 
 
-    function CheckAndRemoveBrickAtPixelCoord(pixelX, pixelY) {
+    //function CheckAndRemoveBrickAtPixelCoord(pixelX, pixelY) {
 
+    //    var tileCol = Math.floor(pixelX / BRICK_WIDTH);
+    //    var tileRow = Math.floor(pixelY / BRICK_HEIGHT);
+    //    if (tileCol < 0 || tileCol >= BRICK_COLS || tileRow < 0 || tileRow >= BRICK_ROWS) {
+    //        return false;
+    //    }
+    //    var brickIndex = brickTileToIndex(tileCol, tileRow);
+    //    if (brickGrid[brickIndex] === 1) {
+    //        brickGrid[brickIndex] = 0;
+    //        return true;
+    //    }
+    //    return false;
+    //}
+
+    function breakAndBounceOffBrickAtPixelCoord(pixelX, pixelY) {
         var tileCol = Math.floor(pixelX / BRICK_WIDTH);
         var tileRow = Math.floor(pixelY / BRICK_HEIGHT);
+
         if (tileCol < 0 || tileCol >= BRICK_COLS || tileRow < 0 || tileRow >= BRICK_ROWS) {
-            return false;
+            return;
         }
+
         var brickIndex = brickTileToIndex(tileCol, tileRow);
+
         if (brickGrid[brickIndex] === 1) {
+            //why ballX, ballY and not pixelX and pixelY?
+            var prevBallX = pixelX - ballSpeedX;
+            var prevBallY = pixelY - ballSpeedY;
+            var prevTileCol = Math.floor(prevBallX / BRICK_WIDTH);
+            var prevTileRow = Math.floor(prevBallY / BRICK_HEIGHT);
+
+            var bothTestFailed = true;
+
+            if (tileCol !== prevTileCol) {
+                var adjacentBrickIndex = brickTileToIndex(prevTileCol, tileRow);
+                if (brickIndex[adjacentBrickIndex] !== 1) {
+                    ballSpeedX *= -1;
+                    bothTestFailed = false;
+                }
+            }
+            if (tileRow !== prevTileRow) {
+                var adjacentBrickIndex = brickTileToIndex(tileCol, prevTileRow);
+                if (brickIndex[adjacentBrickIndex] !== 1) {
+                    ballSpeedY *= -1;
+                    bothTestFailed = false;
+                }
+            }
+            if (bothTestFailed) {
+                ballSpeedX *= -1;
+                ballSpeedY *= -1;
+            }
+
             brickGrid[brickIndex] = 0;
-            return true;
         }
-        return false;
+
+
     }
 
     function drawDebug() {
