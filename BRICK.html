@@ -34,6 +34,8 @@
 
     var brickGrid = new Array(BRICK_COLS * BRICK_ROWS);
 
+    var brickCounter = 0;
+
     var debug = false;
 
     window.onload = function() {
@@ -55,6 +57,11 @@
         canvas.addEventListener('mousemove', function(evt) {
             const mousePos = calculateMousePos(evt);
             paddleX = mousePos.x - (paddleWidth / 2);
+
+            if (debug) {
+                ballX = mousePos.x;
+                ballY = mousePos.y;
+            }
         });
 
         canvas.addEventListener('keydown', function(evt) {
@@ -108,6 +115,9 @@
                     const delta = ballX - (paddleX + paddleWidth / 2);
                     ballSpeedX = delta * ballSpeedXMultipler;
                     ballSpeedY *= -1;
+                    if (brickCounter === 0) {
+                        resetBricks();
+                    }
                 }
             }
         }
@@ -120,6 +130,9 @@
                     const delta = ballX - (paddleX + paddleWidth / 2);
                     ballSpeedX = delta * ballSpeedXMultipler;
                     ballSpeedY *= -1;
+                    if (brickCounter === 0) {
+                        resetBricks();
+                    }
                 }
             }
         }
@@ -195,12 +208,13 @@
 
     function resetBricks() {
         for (let i = 0; i < brickGrid.length; i++) {
-            brickGrid[i] = 1;
-            //if (Math.random() < 0.5) {
-            //    brickGrid[i] = 1;
-            //} else {
-            //    brickGrid[i] = 0;
-            //}
+            //brickGrid[i] = 1;
+            if (Math.random() < 0.5) {
+                brickGrid[i] = 1;
+                brickCounter++;
+            } else {
+                brickGrid[i] = 0;
+            }
         }
     }
 
@@ -248,29 +262,31 @@
 
             var bothTestFailed = true;
 
+            ///todo: getting weird bounces where both tileCol!=prevtilecol and tileRow!=prevtilerow
+            var adjacentBrickIndex;
             if (tileCol !== prevTileCol) {
-                var adjacentBrickIndex = brickTileToIndex(prevTileCol, tileRow);
+                adjacentBrickIndex = brickTileToIndex(prevTileCol, tileRow);
                 if (brickIndex[adjacentBrickIndex] !== 1) {
                     ballSpeedX *= -1;
                     bothTestFailed = false;
                 }
             }
             if (tileRow !== prevTileRow) {
-                var adjacentBrickIndex = brickTileToIndex(tileCol, prevTileRow);
+                adjacentBrickIndex = brickTileToIndex(tileCol, prevTileRow);
                 if (brickIndex[adjacentBrickIndex] !== 1) {
                     ballSpeedY *= -1;
                     bothTestFailed = false;
                 }
             }
+
             if (bothTestFailed) {
                 ballSpeedX *= -1;
                 ballSpeedY *= -1;
             }
 
             brickGrid[brickIndex] = 0;
+            brickCounter--;
         }
-
-
     }
 
     function drawDebug() {
