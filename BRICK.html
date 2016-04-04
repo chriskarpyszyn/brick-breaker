@@ -66,7 +66,7 @@
 
         canvas.addEventListener('keydown', function(evt) {
             var keyCode = evt.keyCode;
-            //q
+            //keycode 81 = q
             if (keyCode == 81) {
                 if (debug == true) {
                     debug = false;
@@ -76,7 +76,6 @@
             }
         });
         
-
         setInterval(function() {
             move();
             draw();
@@ -140,10 +139,8 @@
         ///todo: need to fix ballX, ballY to detect at outer edge of circle and not center (clipping issues)
         breakAndBounceOffBrickAtPixelCoord(ballX, ballY);
 
-
         ballX += ballSpeedX;
         ballY += ballSpeedY;
-
     }
 
     function draw() {
@@ -156,12 +153,9 @@
         colorCircle(ballX, ballY, ballRadius, '#FFFFFF');
 
         drawDebug();
-
-
     }
 
     function drawBricks() {
-
         for (var i = 0; i < BRICK_COLS; i++) {
             for (var j = 0; j < BRICK_ROWS; j++) {
 
@@ -230,22 +224,6 @@
         return (brickGrid[brickIndex] === 1);
     }
 
-
-    //function CheckAndRemoveBrickAtPixelCoord(pixelX, pixelY) {
-
-    //    var tileCol = Math.floor(pixelX / BRICK_WIDTH);
-    //    var tileRow = Math.floor(pixelY / BRICK_HEIGHT);
-    //    if (tileCol < 0 || tileCol >= BRICK_COLS || tileRow < 0 || tileRow >= BRICK_ROWS) {
-    //        return false;
-    //    }
-    //    var brickIndex = brickTileToIndex(tileCol, tileRow);
-    //    if (brickGrid[brickIndex] === 1) {
-    //        brickGrid[brickIndex] = 0;
-    //        return true;
-    //    }
-    //    return false;
-    //}
-
     function breakAndBounceOffBrickAtPixelCoord(pixelX, pixelY) {
         var tileCol = Math.floor(pixelX / BRICK_WIDTH);
         var tileRow = Math.floor(pixelY / BRICK_HEIGHT);
@@ -257,7 +235,6 @@
         var brickIndex = brickTileToIndex(tileCol, tileRow);
 
         if (brickGrid[brickIndex] === 1) {
-            //why ballX, ballY and not pixelX and pixelY?
             var prevBallX = pixelX - ballSpeedX;
             var prevBallY = pixelY - ballSpeedY;
             var prevTileCol = Math.floor(prevBallX / BRICK_WIDTH);
@@ -309,9 +286,6 @@
 
         }
     }
-
-
-
 </script>
 
 </body>
