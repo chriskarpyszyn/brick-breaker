@@ -77,4 +77,6 @@ function resetBall() {
     ballY = canvas.height / 2;
     ballSpeedX = INITIAL_BALL_SPEED_X;
     ballSpeedY = INITIAL_BALL_SPEED_Y;
+
+    score = 0;
 }

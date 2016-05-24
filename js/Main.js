@@ -3,6 +3,8 @@ var canvasContext;
 
 var debug = false;
 
+var score = 0;
+
 window.onload = function () {
     const fps = 30;
     canvas = document.getElementById('gameCanvas');
@@ -35,6 +37,12 @@ function draw() {
     drawBall();
 
     drawDebug();
+
+    drawScore();
+}
+
+function drawScore() {
+    drawText(score, 5, 30, "#FFFFFF", "20px Consolas", "left");
 }
 
 

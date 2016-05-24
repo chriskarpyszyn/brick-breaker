@@ -86,5 +86,6 @@ function breakAndBounceOffBrickAtPixelCoord(pixelX, pixelY) {
 
         brickGrid[brickIndex] = 0;
         brickCounter--;
+        score += 100;
     }
 }

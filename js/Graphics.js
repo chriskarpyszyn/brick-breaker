@@ -27,3 +27,10 @@ function drawDebug() {
 
     }
 }
+
+function drawText(text, x, y, color, font, textAlign) {
+    canvasContext.fillStyle = color;
+    canvasContext.font = font;
+    canvasContext.textAlign = textAlign;
+    canvasContext.fillText(text, x, y);
+}
