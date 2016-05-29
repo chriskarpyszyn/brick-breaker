@@ -12,7 +12,7 @@ window.onload = function () {
 
     initHandlers();
 
-    resetBall();
+    initBall();
     resetBricks();
 
     initPaddle();

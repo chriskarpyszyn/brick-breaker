@@ -8,6 +8,10 @@ var ballRadius = 10;
 const INITIAL_BALL_SPEED_X = 5;
 const INITIAL_BALL_SPEED_Y = 5;
 
+const INITIAL_BALL_LIVES = 3;
+var ballLives = INITIAL_BALL_LIVES;
+
+
 function moveBall() {
     const ballLeft = ballX - ballRadius;
     const ballRight = ballX + ballRadius;
@@ -70,6 +74,18 @@ function moveBall() {
 
 function drawBall() {
     colorCircle(ballX, ballY, ballRadius, '#FFFFFF');
+    drawBallLives();
+}
+
+function drawBallLives() {
+
+    var offset = 0;
+    for (var i = 0; i < ballLives; i++) {
+        colorCircle(canvas.width - 10 - offset, 8, 6, "#FFFFFF");
+        offset += 15;
+    }
+
+
 }
 
 function resetBall() {
@@ -78,5 +94,20 @@ function resetBall() {
     ballSpeedX = INITIAL_BALL_SPEED_X;
     ballSpeedY = INITIAL_BALL_SPEED_Y;
 
-    score = 0;
+    if (ballLives > 0) {
+        ballLives -= 1;
+    } else {
+        score = 0;
+        resetBricks();
+        ballLives = INITIAL_BALL_LIVES;
+    }
+    
+    
+}
+
+function initBall() {
+    ballX = canvas.width / 2;
+    ballY = canvas.height / 2;
+    ballSpeedX = INITIAL_BALL_SPEED_X;
+    ballSpeedY = INITIAL_BALL_SPEED_Y;
 }
