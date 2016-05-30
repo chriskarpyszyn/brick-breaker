@@ -6,7 +6,7 @@ function initHandlers() {
 
 function mouseMoveHandler(evt) {
     const mousePos = calculateMousePos(evt);
-    paddleX = mousePos.x - (paddleWidth / 2);
+    movePaddle(mousePos.x);
 
     if (debug) {
         ballX = mousePos.x;
