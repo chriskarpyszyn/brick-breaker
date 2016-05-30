@@ -1,5 +1,6 @@
 function initHandlers() {
     canvas.addEventListener("mousemove", mouseMoveHandler);
+    canvas.addEventListener("mouseup", mouseUpHandler);
     canvas.addEventListener("keydown", keyDownHandler);
 }
 
@@ -11,6 +12,10 @@ function mouseMoveHandler(evt) {
         ballX = mousePos.x;
         ballY = mousePos.y;
     }
+}
+
+function mouseUpHandler() {
+    ballHeldByPaddle = false;
 }
 
 function keyDownHandler(evt) {
