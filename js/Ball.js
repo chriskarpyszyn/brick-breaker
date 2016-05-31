@@ -25,16 +25,15 @@ function moveBall() {
         ballY = paddleY - ballRadius;
     } else {
 
-        ///todo: BUG, ball get's stuck in the side on some collisions
-        if (ballLeft < 0) {
+        if (ballLeft < 0 && ballSpeedX < 0) {
             ballSpeedX *= -1;
         }
 
-        if (ballRight > canvas.width) {
+        if (ballRight > canvas.width && ballSpeedX > 0) {
             ballSpeedX *= -1;
         }
 
-        if (ballTop < 0) {
+        if (ballTop < 0 && ballSpeedY < 0) {
             ballSpeedY *= -1;
         }
 
@@ -111,8 +110,8 @@ function resetBall() {
         resetBricks();
         ballLives = INITIAL_BALL_LIVES;
     }
-    
-    
+
+
 }
 
 function initBall() {
