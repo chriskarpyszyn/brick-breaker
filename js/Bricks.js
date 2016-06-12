@@ -87,5 +87,9 @@ function breakAndBounceOffBrickAtPixelCoord(pixelX, pixelY) {
         brickGrid[brickIndex] = 0;
         brickCounter--;
         score += 100;
+
+        if (score % SCORE_FOR_NEW_LIFE === 0) {
+            ballLives++;
+        }
     }
 }

@@ -5,6 +5,8 @@ var debug = false;
 
 var score = 0;
 
+var SCORE_FOR_NEW_LIFE = 5000;
+
 window.onload = function () {
     const fps = 30;
     canvas = document.getElementById('gameCanvas');

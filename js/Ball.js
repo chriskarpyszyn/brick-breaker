@@ -6,7 +6,7 @@ var ballSpeedXMultipler = 0.35;
 var ballRadius = 10;
 
 const INITIAL_BALL_SPEED_X = 5;
-const INITIAL_BALL_SPEED_Y = 5;
+const INITIAL_BALL_SPEED_Y = 8;
 
 const INITIAL_BALL_LIVES = 3;
 var ballLives = INITIAL_BALL_LIVES;
