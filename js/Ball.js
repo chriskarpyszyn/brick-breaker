@@ -80,7 +80,10 @@ function moveBall() {
 }
 
 function drawBall() {
-    colorCircle(ballX, ballY, ballRadius, '#FFFFFF');
+
+    colorCircle(ballX, ballY, ballRadius, "#FFFFFF");
+    //drawBitmapCenteredAtLocationWithRotation(ballPic, ballX, ballY, 0);
+
     drawBallLives();
 }
 

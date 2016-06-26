@@ -15,6 +15,8 @@ function drawBricks() {
             if (isBrickAtTileCoord(i, j)) {
                 colorRect((i * BRICK_WIDTH), (j * BRICK_HEIGHT), BRICK_WIDTH - BRICK_GAP,
                 BRICK_HEIGHT - BRICK_GAP, '#A1DAED');
+                //drawBitmapCenteredAtLocationWithRotation(brickPic,
+                //i*BRICK_WIDTH, j*BRICK_HEIGHT, 0);
             }
         }
     }

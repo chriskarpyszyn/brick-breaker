@@ -7,22 +7,23 @@ var score = 0;
 
 var SCORE_FOR_NEW_LIFE = 5000;
 
-window.onload = function () {
     const fps = 30;
+
+window.onload = function () {
+
     canvas = document.getElementById('gameCanvas');
     canvasContext = canvas.getContext('2d');
 
     initHandlers();
+
 
     initBall();
     resetBricks();
 
     initPaddle();
 
-    setInterval(function () {
-        move();
-        draw();
-    }, 1000 / fps);
+    loadImages();
+
 };
 
 function move() {
@@ -43,19 +44,13 @@ function draw() {
     drawScore();
 }
 
+function startGame() {
+    setInterval(function () {
+        move();
+        draw();
+    }, 1000 / fps);
+}
+
 function drawScore() {
     drawText(score, 5, 30, "#FFFFFF", "20px Consolas", "left");
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

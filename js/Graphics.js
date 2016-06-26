@@ -34,3 +34,11 @@ function drawText(text, x, y, color, font, textAlign) {
     canvasContext.textAlign = textAlign;
     canvasContext.fillText(text, x, y);
 }
+
+function drawBitmapCenteredAtLocationWithRotation(graphic, x, y, withAngle) {
+    canvasContext.save();
+    canvasContext.translate(x,y);
+    canvasContext.rotate(withAngle);
+    canvasContext.drawImage(graphic, -graphic.width/2, -graphic.height/2);
+    canvasContext.restore();
+}
